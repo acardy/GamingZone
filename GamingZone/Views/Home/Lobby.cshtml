@@ -36,9 +36,10 @@
                     {
                         <div class="lobby-cell seat" data-table-index="@tableIndex" data-seat-index="@seatIndex">
                             <a href="#" class="seat-join-button">Join</a>
-                            <Span class="seat-user-name"></Span>
+                            <span class="seat-user-name hidden"></span>
+                            <Span class="seat-stand-button hidden">❎</Span>
                             <Span class="seat-accept-thumb hidden">👍</Span>
-                        </div>
+</div>
                     }
                     <div class="lobby-cell">Watch</div>
                 </div>
@@ -91,6 +92,7 @@
                 $('#discussion').append('<div><strong>' + htmlEncode(name)
                     + '</strong>: ' + htmlEncode(message) + '</div>');
             };
+
             lobby.client.userJoined = function (name, allUsers) {
                 $('#discussion').append('<div> ** User ' + htmlEncode(name) + ' has joined.</div>');
                 $("#users").empty();
@@ -98,6 +100,7 @@
                     $("#users").append("<div>"+value+"</div>");
                 })
             };
+
             lobby.client.userLeft = function (name, allUsers) {
                 $('#discussion').append('<div> ** User ' + htmlEncode(name) + ' has left.</div>');
                 $("#users").empty();
@@ -106,22 +109,30 @@
                 })
             };
 
-            lobby.client.userSat= function (tableIndex, seatIndex, user) {
+            lobby.client.seatUpdated = function (tableIndex, seatIndex, user, thumbUp) {
                 var seat = $(".lobby-cell.seat")
                     .filter("*[data-table-index='"+tableIndex+"']")
                     .filter("*[data-seat-index='"+seatIndex+"']");
 
-                seat.children(".seat-join-button").addClass("hidden");
-                seat.children(".seat-user-name").text(user);
-            };
+                if (thumbUp)
+                    seat.children("seat-accept-thumb").addClass("accepted");
+                else
+                    seat.children("seat-accept-thumb").removeClass("accepted");
 
-            lobby.client.userStood= function (tableIndex, seatIndex, user) {
-                var seat = $(".lobby-cell.seat")
-                    .filter("*[data-table-index='"+tableIndex+"']")
-                    .filter("*[data-seat-index='"+seatIndex+"']");
-
-                seat.children(".seat-join-button").removeClass("hidden");
-                seat.children(".seat-user-name").text("");
+                if (user = null)
+                {
+                    seat.children(".seat-join-button").removeClass("hidden");
+                    seat.children(".seat-user-name").addClass("hidden").text("");
+                    seat.children("seat-accept-thumb").addClass("hidden");
+                    seat.children("seat-stand-button").addClass("hidden");
+                }
+                else
+                {
+                    seat.children(".seat-join-button").addClass("hidden");
+                    seat.children(".seat-user-name").removeClass("hidden").text(user);
+                    seat.children("seat-accept-thumb").removeClass("hidden");
+                    seat.children("seat-stand-button").removeClass("hidden");
+                }
             };
 
             // Start the connection.
@@ -133,6 +144,12 @@
                     var tableIndex = $(e.target).parent().data("table-index");
                     var seatIndex = $(e.target).parent().data("seat-index");
                     lobby.server.selectSeat(tableIndex, seatIndex);
+                    return false;
+                })
+                $(".seat-stand-button").click(function(e){                  
+                    var tableIndex = $(e.target).parent().data("table-index");
+                    var seatIndex = $(e.target).parent().data("seat-index");
+                    lobby.server.exitSeat(tableIndex, seatIndex);
                     return false;
                 })
 

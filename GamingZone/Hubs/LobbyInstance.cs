@@ -58,6 +58,22 @@ namespace GamingZone.Hubs
                 }
             }
         }
+
+        internal bool RemoveUserFromSeat(UserConnection userConnection, int tableIndex, int seatIndex)
+        {
+            // TODO: Validate the indexes
+
+            var seat = Tables[tableIndex].Seats[seatIndex];
+
+            // Make sure it's the right user being removed
+            if (seat.User != userConnection)
+                return false;
+
+            seat.User = null;
+            seat.ThumbsUp = false; // Needs to be evented
+
+            return true;
+        }
     }
     internal class Table
     {

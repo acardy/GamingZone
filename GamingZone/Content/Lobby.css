@@ -62,6 +62,11 @@
     overflow-y:scroll;
 }
 
+.seat-stand-button{
+    cursor:pointer;
+    color:black;
+}
+
 .seat-accept-thumb{
     cursor:pointer;
     color:black;
@@ -77,6 +82,10 @@
 }
 
 .seat-join-button.hidden{
+    display:none;
+}
+
+.seat-user-name.hidden{
     display:none;
 }
 

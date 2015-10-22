@@ -43,13 +43,27 @@ namespace GamingZone.Hubs
             LobbyInstance lobbyInstance = GetLobbyInstance(userConnection);
             var userSat = lobbyInstance.AddUserToSeat(userConnection, tableIndex, seatIndex);
 
-            // Check if someone is sitting there
+            // Check if they were able to sit
             if (!userSat)
                 return;
+            
+            Clients.Group(userConnection.GroupId).UpdateSeat(tableIndex, seatIndex, userConnection.Name, false);
+        }
 
-            // Need to add some state somewhere.
-            // TODO: Seat updated event?
-            Clients.Group(userConnection.GroupId).UserSat(tableIndex, seatIndex, userConnection.Name);
+        public void ExitSeat(int tableIndex, int seatIndex)
+        {
+            var userConnection = m_connections.FirstOrDefault(g => g.ConnectionId == Context.ConnectionId);
+            if (userConnection == null)
+                return;
+
+            LobbyInstance lobbyInstance = GetLobbyInstance(userConnection);
+            var userStood = lobbyInstance.RemoveUserFromSeat(userConnection, tableIndex, seatIndex);
+
+            // Check if they were able to stand
+            if (!userStood)
+                return;
+            
+            Clients.Group(userConnection.GroupId).UpdateSeat(tableIndex, seatIndex, userConnection.Name, false);
         }
 
         private static LobbyInstance GetLobbyInstance(UserConnection userConnection)
