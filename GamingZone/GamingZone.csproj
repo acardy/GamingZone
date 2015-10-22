@@ -149,7 +149,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\LobbyHub.cs" />
+    <Compile Include="Hubs\LobbyInstance.cs" />
     <Compile Include="Hubs\Startup.cs" />
+    <Compile Include="Hubs\UserConnection.cs" />
     <Compile Include="Models\Lobby.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

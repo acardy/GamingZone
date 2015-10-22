@@ -115,6 +115,15 @@
                 seat.children(".seat-user-name").text(user);
             };
 
+            lobby.client.userStood= function (tableIndex, seatIndex, user) {
+                var seat = $(".lobby-cell.seat")
+                    .filter("*[data-table-index='"+tableIndex+"']")
+                    .filter("*[data-seat-index='"+seatIndex+"']");
+
+                seat.children(".seat-join-button").removeClass("hidden");
+                seat.children(".seat-user-name").text("");
+            };
+
             // Start the connection.
             $.connection.hub.logging = true;
             $.connection.hub.start().done(function () {
