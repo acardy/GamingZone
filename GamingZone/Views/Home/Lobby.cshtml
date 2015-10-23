@@ -119,19 +119,19 @@
                 else
                     seat.children("seat-accept-thumb").removeClass("accepted");
 
-                if (user = null)
+                if (user == null)
                 {
                     seat.children(".seat-join-button").removeClass("hidden");
                     seat.children(".seat-user-name").addClass("hidden").text("");
-                    seat.children("seat-accept-thumb").addClass("hidden");
-                    seat.children("seat-stand-button").addClass("hidden");
+                    seat.children(".seat-accept-thumb").addClass("hidden");
+                    seat.children(".seat-stand-button").addClass("hidden");
                 }
                 else
                 {
                     seat.children(".seat-join-button").addClass("hidden");
                     seat.children(".seat-user-name").removeClass("hidden").text(user);
-                    seat.children("seat-accept-thumb").removeClass("hidden");
-                    seat.children("seat-stand-button").removeClass("hidden");
+                    seat.children(".seat-accept-thumb").removeClass("hidden");
+                    seat.children(".seat-stand-button").removeClass("hidden");
                 }
             };
 

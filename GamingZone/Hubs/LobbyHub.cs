@@ -47,7 +47,7 @@ namespace GamingZone.Hubs
             if (!userSat)
                 return;
             
-            Clients.Group(userConnection.GroupId).UpdateSeat(tableIndex, seatIndex, userConnection.Name, false);
+            Clients.Group(userConnection.GroupId).SeatUpdated(tableIndex, seatIndex, userConnection.Name, false);
         }
 
         public void ExitSeat(int tableIndex, int seatIndex)
