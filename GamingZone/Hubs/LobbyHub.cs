@@ -63,7 +63,7 @@ namespace GamingZone.Hubs
             if (!userStood)
                 return;
             
-            Clients.Group(userConnection.GroupId).UpdateSeat(tableIndex, seatIndex, userConnection.Name, false);
+            Clients.Group(userConnection.GroupId).SeatUpdated(tableIndex, seatIndex, null, false);
         }
 
         private static LobbyInstance GetLobbyInstance(UserConnection userConnection)
@@ -92,7 +92,7 @@ namespace GamingZone.Hubs
             lobbyInstance.RemoveUserFromAllSeats(userConnection, r =>
             {
                 // Fire events
-                Clients.Group(userConnection.GroupId).UserStood(r.TableIndex, r.SeatIndex, userConnection.Name);
+                Clients.Group(userConnection.GroupId).SeatUpdated(r.TableIndex, r.SeatIndex, null, false);
             });
 
             // New user list
