@@ -26,6 +26,7 @@ namespace GamingZone.Controllers
             return View(m_lobbies);
         }
 
+        [Authorize]
         public ActionResult Lobby(string lobbyId)
         {
             var lobby = m_lobbies.FirstOrDefault(l => l.Id == lobbyId);

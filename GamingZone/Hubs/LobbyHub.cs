@@ -14,7 +14,9 @@ namespace GamingZone.Hubs
 
         public async Task Join()
         {
-            var name = Clients.Caller.userName;
+            // Check if the user is authenticated!
+
+            var name = Context.User.Identity.Name;
             var group = ((long)Clients.Caller.lobbyId).ToString();
 
             m_connections.Add(new UserConnection(name, Context.ConnectionId, group));
