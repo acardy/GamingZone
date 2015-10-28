@@ -29,6 +29,11 @@
     overflow-y:scroll;
 }
 
+.lobby-table
+{
+    border:1px solid black;
+}
+
 .lobby-row
 {  
     display:table-row;

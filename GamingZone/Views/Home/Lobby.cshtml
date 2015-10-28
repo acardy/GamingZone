@@ -13,40 +13,32 @@
 <p>Welcome to the @Model.Name lobby</p>
 
 <div class="container">
-
-    <div class="lobby-tables-content">
-        <div class="lobby-container">
-
-            @* Header *@
-            <div class="lobby-row">
-                <div class="lobby-cell">Table</div>
-                @for (int seatIndex = 0; seatIndex < @Model.SeatsPerTable; seatIndex++)
+    @{
+        var tablesLeft = Model.Tables;
+        while (tablesLeft > 3)
+        {
+            <div class="row">
+                @for (var tableRowIndex = 0; tableRowIndex < 3; tableRowIndex++)
                 {
-                    <div class="lobby-cell"><Span>Player @(seatIndex + 1)</Span></div>
-                }
-                <div class="lobby-cell">Watch</div>
-            </div>
-
-            @* Rows *@
-            @for (int tableIndex = 0; tableIndex < Model.Tables; tableIndex++)
-            {
-                <div class="lobby-row">
-                    <div class="lobby-cell">@(tableIndex + 1)</div>
-                    @for (int seatIndex = 0; seatIndex < @Model.SeatsPerTable; seatIndex++)
-                    {
-                        <div class="lobby-cell seat" data-table-index="@tableIndex" data-seat-index="@seatIndex">
-                            <a href="#" class="seat-join-button">Join</a>
-                            <span class="seat-user-name hidden"></span>
-                            <Span class="seat-stand-button hidden">❌</Span>
-                            <Span class="seat-accept-thumb hidden">👍</Span>
-                        </div>
-                    }
-                    <div class="lobby-cell">Watch</div>
+                <div class="col-md-4">
+                    <div class="lobby-table">
+                        @for (int seatIndex = 0; seatIndex < @Model.SeatsPerTable; seatIndex++)
+                        {
+                            <div class="lobby-cell seat" data-table-index="@(Model.Tables - tablesLeft)" data-seat-index="@seatIndex">
+                                <a href="#" class="seat-join-button">Join</a>
+                                <span class="seat-user-name hidden"></span>
+                                <Span class="seat-stand-button hidden">❌</Span>
+                                <Span class="seat-accept-thumb hidden">👍</Span>
+                            </div>
+                        }
+                    </div>
                 </div>
-            }
-        </div>
+                    { tablesLeft--; }
+                }
 
-    </div>
+            </div>
+        }
+    }
 
     <div class="lobby-container">
 
