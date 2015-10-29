@@ -1,70 +1,26 @@
 ﻿body {
 }
 
-.lobby-cell#discussion
-{
-    display: table-cell;
-
-    height:300px;
-
-    padding:10px;
-    border: 1px solid #080808;
-    background-color: #222222;
-    color: white;
-    
-    margin-bottom:5px;
-    overflow-y:scroll;
-}
-
-.lobby-container
-{  
-    /*border: 1px solid red;*/
-    display:table;
-    width:100%;
-}
-
-.lobby-tables-content
+.lobby-body
 {
     height:300px;
     overflow-y:scroll;
 }
 
-.lobby-table
+#discussion
 {
-    border:1px solid black;
-}
-
-.lobby-row
-{  
-    display:table-row;
-}
-
-.lobby-cell
-{
-    display: table-cell;
-}
-
-.lobby-cell#users
-{  
-    padding:10px;
-    border: 1px solid #080808;
-    background-color: #222222;
-    color: white;
-
-    width:150px;
-}
-
-.lobby-cell#discussion
-{
-    height:300px;
-
-    padding:10px;
-    border: 1px solid #080808;
-    background-color: #222222;
-    color: white;
-    
-    margin-bottom:5px;
+    height:150px;
     overflow-y:scroll;
+}
+
+#message
+{
+    max-width:10000px;
+}
+
+.no-padding-left
+{
+    padding-left:0px;
 }
 
 .seat-stand-button{
@@ -92,14 +48,4 @@
 
 .seat-user-name.hidden{
     display:none;
-}
-
-#message
-{  
-    width:100%;
-    max-width:none;
-    
-    background-color: #222222;
-    color: white;
-    border: 1px solid black;
 }

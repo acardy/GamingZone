@@ -13,44 +13,68 @@
 <p>Welcome to the @Model.Name lobby</p>
 
 <div class="container">
-    @{
-        var tablesLeft = Model.Tables;
-        while (tablesLeft > 3)
-        {
-            <div class="row">
-                @for (var tableRowIndex = 0; tableRowIndex < 3; tableRowIndex++)
-                {
-                <div class="col-md-4">
-                    <div class="lobby-table">
-                        @for (int seatIndex = 0; seatIndex < @Model.SeatsPerTable; seatIndex++)
+
+    <div class="row">
+
+        <div class="col-md-9 col-sm-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">Lobby</div>
+                <div class="panel-body lobby-body">
+                    @{
+                        var tablesLeft = Model.Tables;
+                        while (tablesLeft > 3)
                         {
-                            <div class="lobby-cell seat" data-table-index="@(Model.Tables - tablesLeft)" data-seat-index="@seatIndex">
-                                <a href="#" class="seat-join-button">Join</a>
-                                <span class="seat-user-name hidden"></span>
-                                <Span class="seat-stand-button hidden">❌</Span>
-                                <Span class="seat-accept-thumb hidden">👍</Span>
+                            <div class="row">
+                                @for (var tableRowIndex = 0; tableRowIndex < 3; tableRowIndex++)
+                {
+                                    <div class="col-md-4 col-sm-4">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">@(Model.Tables - tablesLeft + 1)</div>
+                                            <div class="panel-body">
+                                                @for (int seatIndex = 0; seatIndex < @Model.SeatsPerTable; seatIndex++)
+                                                {
+                                                    <div class="lobby-cell seat" data-table-index="@(Model.Tables - tablesLeft)" data-seat-index="@seatIndex">
+                                                        <a href="#" class="seat-join-button btn btn-default">Join</a>
+                                                        <span class="seat-user-name hidden"></span>
+                                                        <Span class="seat-stand-button hidden">❌</Span>
+                                                        <Span class="seat-accept-thumb hidden">👍</Span>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    { tablesLeft--; }
+                                }
+
                             </div>
                         }
-                    </div>
+                    }
                 </div>
-                    { tablesLeft--; }
-                }
-
             </div>
-        }
-    }
+        </div>
 
-    <div class="lobby-container">
-
-        <div class="lobby-row">
-            <div class="lobby-cell" id="discussion"></div>
-            <div class="lobby-cell" id="users"></div>
+        <div class="col-md-3 col-sm-3 no-padding-left">
+            <div class="panel panel-default">
+                <div class="panel-heading">People</div>
+                <div id="users" class="panel-body lobby-body"></div>
+            </div>
         </div>
 
     </div>
 
-    <input type="text" id="message" />
-    <input type="hidden" id="displayname" />
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div id="discussion"></div>
+                </div>
+                <div class="panel-footer">
+                    <input type="text" class="form-control" id="message" placeholder="Chat..." />
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 
@@ -132,13 +156,13 @@
             $.connection.hub.start().done(function () {
 
                 // Table events
-                $(".seat-join-button").click(function(e){                  
+                $(".seat-join-button").click(function(e){
                     var tableIndex = $(e.target).parent().data("table-index");
                     var seatIndex = $(e.target).parent().data("seat-index");
                     lobby.server.selectSeat(tableIndex, seatIndex);
                     return false;
                 })
-                $(".seat-stand-button").click(function(e){                  
+                $(".seat-stand-button").click(function(e){
                     var tableIndex = $(e.target).parent().data("table-index");
                     var seatIndex = $(e.target).parent().data("seat-index");
                     lobby.server.exitSeat(tableIndex, seatIndex);
