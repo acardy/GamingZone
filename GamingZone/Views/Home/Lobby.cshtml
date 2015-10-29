@@ -29,16 +29,17 @@
                 {
                                     <div class="col-md-4 col-sm-4">
                                         <div class="panel panel-default">
-                                            <div class="panel-heading">@(Model.Tables - tablesLeft + 1)</div>
+                                            <div class="badge top-left">@(Model.Tables - tablesLeft + 1)</div>
+                                            <!--<div class="panel-heading">@(Model.Tables - tablesLeft + 1)</div>-->
                                             <div class="panel-body">
                                                 @for (int seatIndex = 0; seatIndex < @Model.SeatsPerTable; seatIndex++)
                                                 {
-                                                    <div class="lobby-cell seat" data-table-index="@(Model.Tables - tablesLeft)" data-seat-index="@seatIndex">
+                                                    <span class="lobby-cell seat" data-table-index="@(Model.Tables - tablesLeft)" data-seat-index="@seatIndex">
                                                         <a href="#" class="seat-join-button btn btn-default">Join</a>
                                                         <span class="seat-user-name hidden"></span>
                                                         <Span class="seat-stand-button hidden">❌</Span>
                                                         <Span class="seat-accept-thumb hidden">👍</Span>
-                                                    </div>
+                                                    </span>
                                                 }
                                             </div>
                                         </div>
@@ -137,17 +138,13 @@
 
                 if (user == null)
                 {
-                    seat.children(".seat-join-button").removeClass("hidden");
-                    seat.children(".seat-user-name").addClass("hidden").text("");
+                    seat.children(".seat-join-button").text("Join");
                     seat.children(".seat-accept-thumb").addClass("hidden");
-                    seat.children(".seat-stand-button").addClass("hidden");
                 }
                 else
                 {
-                    seat.children(".seat-join-button").addClass("hidden");
-                    seat.children(".seat-user-name").removeClass("hidden").text(user);
+                    seat.children(".seat-join-button").text(user);
                     seat.children(".seat-accept-thumb").removeClass("hidden");
-                    seat.children(".seat-stand-button").removeClass("hidden");
                 }
             };
 
@@ -157,17 +154,22 @@
 
                 // Table events
                 $(".seat-join-button").click(function(e){
-                    var tableIndex = $(e.target).parent().data("table-index");
-                    var seatIndex = $(e.target).parent().data("seat-index");
-                    lobby.server.selectSeat(tableIndex, seatIndex);
-                    return false;
-                })
-                $(".seat-stand-button").click(function(e){
-                    var tableIndex = $(e.target).parent().data("table-index");
-                    var seatIndex = $(e.target).parent().data("seat-index");
-                    lobby.server.exitSeat(tableIndex, seatIndex);
-                    return false;
-                })
+                    if (!$(e.target).hasClass("occupied"))
+                    {
+                        $(e.target).addClass("occupied");
+                        var tableIndex = $(e.target).parent().data("table-index");
+                        var seatIndex = $(e.target).parent().data("seat-index");
+                        lobby.server.selectSeat(tableIndex, seatIndex);
+                        return false;
+                    }
+                    else{
+                        $(e.target).removeClass("occupied");
+                        var tableIndex = $(e.target).parent().data("table-index");
+                        var seatIndex = $(e.target).parent().data("seat-index");
+                        lobby.server.exitSeat(tableIndex, seatIndex);
+                        return false;
+                    }
+                });
 
                 // Set the user name and join
                 lobby.server.join();

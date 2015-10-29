@@ -35,7 +35,7 @@
 
 .seat-accept-thumb.accepted{
     cursor:pointer;
-    color:lightgreen;
+    color:darkgreen;
 }
 
 .seat-accept-thumb.hidden{
@@ -48,4 +48,10 @@
 
 .seat-user-name.hidden{
     display:none;
+}
+
+.badge.top-left{
+    position:absolute;
+    left:5px;
+    top:-5px;
 }
