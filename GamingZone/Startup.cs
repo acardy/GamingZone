@@ -1,10 +1,8 @@
-﻿using Microsoft.Owin;
+﻿using GamingZone.Data;
+using Microsoft.Framework.DependencyInjection;
+using Microsoft.Owin;
 using Owin;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.Entity;
 
 [assembly: OwinStartupAttribute(typeof(GamingZone.Startup))]
 namespace GamingZone
@@ -15,6 +13,11 @@ namespace GamingZone
         {
             ConfigureAuth(app);
             app.MapSignalR();
+        }
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddTransient<IApplicationDbContext, ApplicationDbContext>();
         }
     }
 }

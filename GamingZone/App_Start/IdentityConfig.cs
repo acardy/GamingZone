@@ -10,6 +10,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using System.Security.Claims;
 using GamingZone.Models;
+using GamingZone.Data;
 
 namespace GamingZone
 {

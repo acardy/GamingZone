@@ -1,4 +1,5 @@
-﻿using GamingZone.Models;
+﻿using GamingZone.Data;
+using GamingZone.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,12 @@ namespace GamingZone.Controllers
     public class HomeController : Controller
     {
         // Simulates a database with a lobby table
-        private readonly List<Lobby> m_lobbies = new List<Lobby>
+        private IApplicationDbContext m_databaseContext;
+
+        public HomeController(IApplicationDbContext appContext)
         {
-            new Lobby() { Id = "1", Name = "Fifteen Two", Tables = 250, SeatsPerTable = 2 },
-            new Lobby() { Id = "2", Name = "Peg Pals", Tables = 250, SeatsPerTable = 2 }
-        };
+            m_databaseContext = appContext;
+        }
 
         public ActionResult Index()
         {
@@ -23,13 +25,13 @@ namespace GamingZone.Controllers
 
         public ActionResult Games()
         {
-            return View(m_lobbies);
+            return View(m_databaseContext.Lobbies);
         }
 
         [Authorize]
         public ActionResult Lobby(string lobbyId)
         {
-            var lobby = m_lobbies.FirstOrDefault(l => l.Id == lobbyId);
+            var lobby = m_databaseContext.Lobbies.FirstOrDefault(l => l.Id == lobbyId);
             if (lobby == null)
                 return HttpNotFound();
 

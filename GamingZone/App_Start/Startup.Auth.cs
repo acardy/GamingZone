@@ -1,4 +1,5 @@
-﻿using GamingZone.Models;
+﻿using GamingZone.Data;
+using GamingZone.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
