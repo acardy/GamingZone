@@ -11,11 +11,16 @@ namespace GamingZone.Data
     {
         protected override void Seed(ApplicationDbContext context)
         {
+            // Create lobbies
             context.Lobbies.AddRange(new List<Lobby>
             {
-                new Lobby() { Id = "1", Name = "Fifteen Two From DB", Tables = 250, SeatsPerTable = 2 },
-                new Lobby() { Id = "2", Name = "Peg Pals From DB", Tables = 250, SeatsPerTable = 2 }
+                new Lobby() { Id = "1", Name = "Fifteen Two From", Tables = 250, SeatsPerTable = 2 },
+                new Lobby() { Id = "2", Name = "Peg Pals From", Tables = 250, SeatsPerTable = 2 }
             });
+
+            // Create a user?
+
+            context.SaveChanges();
         }
     }
 }
